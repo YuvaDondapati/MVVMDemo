@@ -6,10 +6,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
+import yuvadon.demos.countries.BuildConfig
+import yuvadon.demos.countries.di.DaggerApiComponent
 import yuvadon.demos.countries.model.CountriesApi
 import yuvadon.demos.countries.model.CountriesService
 import yuvadon.demos.countries.model.Country
 import yuvadon.demos.countries.view.CountryListAdapter
+import javax.inject.Inject
 
 class ListViewModel: ViewModel() {
 
@@ -17,9 +20,13 @@ class ListViewModel: ViewModel() {
     val loadError = MutableLiveData<Boolean>()
     val isLoading = MutableLiveData<Boolean>()
 
-    private val countriesService = CountriesService()
+    @Inject
+    lateinit var countriesService: CountriesService
     private val disposable = CompositeDisposable()
 
+    init {
+        DaggerApiComponent.builder().baseUrl(BuildConfig.BASE_URL).build().injectVM(this)
+    }
     fun  refresh(){
         fetchCountries()
     }

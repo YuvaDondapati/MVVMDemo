@@ -6,6 +6,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import yuvadon.demos.countries.model.CountriesApi
+import yuvadon.demos.countries.model.CountriesService
 
 @Module
 class ApiModule {
@@ -22,6 +23,11 @@ class ApiModule {
     @Provides
     fun provideCountriesApi(retrofit: Retrofit):CountriesApi{
         return retrofit.create(CountriesApi::class.java)
+    }
+
+    @Provides
+    fun provideCountriesService() : CountriesService{
+        return CountriesService()
     }
 
 }
