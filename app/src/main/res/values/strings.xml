@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">Countries</string>
+    <string name="app_name">MVVMDemo</string>
     <string name="error_text">An Error has occured</string>
 </resources>

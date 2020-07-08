@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 import yuvadon.demos.countries.R
 import yuvadon.demos.countries.viewmodel.ListViewModel
@@ -26,12 +27,33 @@ class MainActivity : AppCompatActivity() {
             adapter =countriesAdapter
         }
 
+        swiperefereshLayout.setOnRefreshListener {
+            swiperefereshLayout.isRefreshing = false
+            viewModel.refresh()
+        }
+
         observeViewModel()
     }
 
-    fun observeViewModel(){
+
+    private fun observeViewModel(){
         viewModel.countries.observe(this, Observer {
-            countries -> countries?.let { countriesAdapter.updateCountries(it) }
+            countries -> countries?.let {
+            countriesList.visibility = View.VISIBLE
+            countriesAdapter.updateCountries(it) }
+        })
+        viewModel.loadError.observe(this, Observer {
+            isError -> isError?.let { errorText.visibility = if(it) View.VISIBLE else View.GONE }
+        })
+
+        viewModel.isLoading.observe(this, Observer {
+            isLoading -> isLoading?.let {
+            loading_bar.visibility = if(it) View.VISIBLE else View.GONE
+            if(it){
+                errorText.visibility = View.GONE
+                countriesList.visibility = View.GONE
+            }
+        }
         })
     }
 }

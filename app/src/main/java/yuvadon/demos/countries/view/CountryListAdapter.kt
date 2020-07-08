@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.item_country.view.*
 import yuvadon.demos.countries.R
 import yuvadon.demos.countries.model.Country
+import yuvadon.demos.countries.utils.getProgressDrawable
+import yuvadon.demos.countries.utils.loadImage
 
 class CountryListAdapter(var countries: ArrayList<Country>): RecyclerView.Adapter<CountryListAdapter.CountryViewHolder>() {
 
@@ -31,10 +33,16 @@ class CountryListAdapter(var countries: ArrayList<Country>): RecyclerView.Adapte
 
     class CountryViewHolder(view: View): RecyclerView.ViewHolder(view){
 
-        val countryName = view.name
+        private val countryName = view.name
+        private val imageView = view.imageView
+        private val capital = view.capital
+
+        private val progressDrawable = getProgressDrawable(view.context)
 
         fun bind(country: Country){
             countryName.text = country.countryName
+            capital.text = country.capital
+            imageView.loadImage(country.flag, progressDrawable)
         }
     }
 }
