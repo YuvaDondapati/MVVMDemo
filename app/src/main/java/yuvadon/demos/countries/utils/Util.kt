@@ -1,15 +1,15 @@
 package yuvadon.demos.countries.utils
 
 import android.content.Context
-import android.support.v4.widget.CircularProgressDrawable
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import yuvadon.demos.countries.R
 
-fun getProgressDrawable(context: Context):CircularProgressDrawable{
+fun getProgressDrawable(context: Context): androidx.swiperefreshlayout.widget.CircularProgressDrawable {
 
-    return CircularProgressDrawable(context).apply {
+    return androidx.swiperefreshlayout.widget.CircularProgressDrawable(context).apply {
         strokeWidth = 10f
         centerRadius = 50f
         start()
@@ -18,7 +18,7 @@ fun getProgressDrawable(context: Context):CircularProgressDrawable{
 
 fun ImageView.loadImage(
     url: String?,
-    progressDrawable: CircularProgressDrawable
+    progressDrawable: androidx.swiperefreshlayout.widget.CircularProgressDrawable
 ){
     val options = RequestOptions()
         .placeholder(progressDrawable)

@@ -1,30 +1,34 @@
 package yuvadon.demos.countries.view
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
-import android.support.v7.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import androidx.activity.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 import yuvadon.demos.countries.R
 import yuvadon.demos.countries.viewmodel.ListViewModel
 
 class MainActivity : AppCompatActivity() {
 
-   lateinit var viewModel: ListViewModel
+   private val viewModel: ListViewModel by viewModels()
    private val countriesAdapter = CountryListAdapter(arrayListOf())
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        viewModel = ViewModelProviders.of(this).get(ListViewModel::class.java)
+//        viewModel = ViewModelProviders.of(this).get(ListViewModel::class.java)
         viewModel.refresh()
 
         //recyclerview setup we can directly access with id (countriesList)
+
+
         countriesList.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter =countriesAdapter
+            adapter = countriesAdapter
         }
 
         swiperefereshLayout.setOnRefreshListener {
@@ -34,7 +38,6 @@ class MainActivity : AppCompatActivity() {
 
         observeViewModel()
     }
-
 
     private fun observeViewModel(){
         viewModel.countries.observe(this, Observer {
